@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h2>My Profile</h2>
+
+<img 
+  src="{% if user.profile.profile_picture %}{{ user.profile.profile_picture.url }}{% endif %}" 
+  width="150"
+  style="border-radius: 50%;">
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <h3>Account Info</h3>
+    {{ user_form.as_p }}
+
+    <h3>Profile Info</h3>
+    {{ profile_form.as_p }}
+
+    <button type="submit">Update Profile</button>
+</form>
+{% endblock %}

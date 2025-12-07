@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Auth System{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/css/auth.css' %}" />
+  </head>
+  <body>
+    <nav>
+      <a href="{% url 'blog:post-list' %}">Blog</a>
+      {% if user.is_authenticated %}
+      <a href="{% url 'blog:post-create' %}">New Post</a>
+      <a href="{% url 'blog:profile' %}">Profile</a>
+      <a href="{% url 'blog:logout' %}">Logout</a>
+      {% else %}
+      <a href="{% url 'blog:login' %}">Login</a>
+      {% endif %}
+    </nav>
+
+    <div class="container">
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        <form method="GET" action="{% url 'search-posts' %}">
+          <input type="text" name="q" placeholder="Search posts..." />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      {% endif %} {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>
